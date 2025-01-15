@@ -12,8 +12,12 @@
 // block to support alphabetical report cards in addition to numerical ones.
 
 // TODO: Adjust the struct as described above.
+pub enum Grade {
+    text(String),
+    literal(f32)
+}
 struct ReportCard {
-    grade: f32,
+    grade: Grade,
     student_name: String,
     student_age: u8,
 }
@@ -21,9 +25,13 @@ struct ReportCard {
 // TODO: Adjust the impl block as described above.
 impl ReportCard {
     fn print(&self) -> String {
+        let res: String = match &self.grade {
+            Grade::literal(x) => format!("{}", x),
+            Grade::text(y) => format!("{}", y),
+        };
         format!(
             "{} ({}) - achieved a grade of {}",
-            &self.student_name, &self.student_age, &self.grade,
+            &self.student_name, &self.student_age, res
         )
     }
 }
@@ -39,7 +47,7 @@ mod tests {
     #[test]
     fn generate_numeric_report_card() {
         let report_card = ReportCard {
-            grade: 2.1,
+            grade:Grade::literal( 2.1),
             student_name: "Tom Wriggle".to_string(),
             student_age: 12,
         };
@@ -52,7 +60,7 @@ mod tests {
     #[test]
     fn generate_alphabetic_report_card() {
         let report_card = ReportCard {
-            grade: "A+",
+            grade: Grade::text("A+".to_owned()),
             student_name: "Gary Plotter".to_string(),
             student_age: 11,
         };

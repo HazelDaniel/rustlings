@@ -23,11 +23,33 @@ enum Command {
     Append(usize),
 }
 
-mod my_module {
+pub mod my_module {
     use super::Command;
 
     // TODO: Complete the function as described above.
-    // pub fn transformer(input: ???) -> ??? { ??? }
+    pub fn transformer(input: Vec<(String, Command)>) -> Vec<String> {
+        let mut res_strings  = Vec::new();
+        for (string, command) in input {
+            let result_str: String = match command {
+                Command::Uppercase => {
+                    string.to_uppercase()
+                },
+                Command::Trim => {
+                    string.trim().to_owned()
+                },
+                Command::Append(count) => {
+                    let mut x = string.to_owned();
+                    for i in 0..count {
+                        x.push_str("bar");
+                    }
+                    x
+                }
+            };
+
+            res_strings.push(result_str);
+        }
+        res_strings
+    }
 }
 
 fn main() {
@@ -48,7 +70,7 @@ mod tests {
             ("foo".to_string(), Command::Append(1)),
             ("bar".to_string(), Command::Append(5)),
         ];
-        let output = transformer(input);
+        let output = super::my_module::transformer(input);
 
         assert_eq!(
             output,

@@ -10,7 +10,14 @@
 
 // TODO: Write a function that calculates the price of an order of apples given
 // the quantity bought.
-// fn calculate_price_of_apples(???) -> ??? { ??? }
+fn calculate_price_of_apples(input: i32) -> i32 {
+    let result = match input {
+        41.. => input,
+        _ => input * 2
+    };
+
+    result
+}
 
 fn main() {
     // You can optionally experiment here.
